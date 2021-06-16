@@ -206,7 +206,7 @@ export function stateListeners(this: FileBrowser): void {
 							});
 						});
 
-						this.tree.appendChild(button.container);
+						// this.tree.appendChild(button.container);
 					}
 				});
 			}, this.defaultTimeout)

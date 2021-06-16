@@ -30,8 +30,6 @@ declare module '../../config' {
 }
 
 Config.prototype.filebrowser = {
-	namespace: '',
-
 	extraButtons: [],
 
 	filter(item: string | ISourceFile, search: string) {
@@ -104,7 +102,7 @@ Config.prototype.filebrowser = {
 		return 0;
 	},
 
-	editImage: true,
+	editImage: false,
 	preview: true,
 	showPreviewNavigation: true,
 	showSelectButtonInPreview: true,
@@ -112,23 +110,17 @@ Config.prototype.filebrowser = {
 
 	howLongShowMsg: 3000,
 
-	createNewFolder: true,
-	deleteFolder: true,
-	renameFolder: true,
-	moveFolder: true,
-	moveFile: true,
-	showFoldersPanel: true,
+	createNewFolder: false,
+	deleteFolder: false,
+	renameFolder: false,
+	moveFolder: false,
+	moveFile: false,
+	showFoldersPanel: false,
 
 	width: 859,
 	height: 400,
 
 	buttons: [
-		'filebrowser.upload',
-		'filebrowser.remove',
-		'filebrowser.update',
-		'filebrowser.select',
-		'filebrowser.edit',
-		'|',
 		'filebrowser.tiles',
 		'filebrowser.list',
 		'|',
@@ -289,22 +281,24 @@ Config.prototype.filebrowser = {
 } as IFileBrowserOptions;
 
 Config.prototype.controls.filebrowser = {
-	upload: {
-		icon: 'plus',
-		isInput: true,
-		isDisabled: (browser: IFileBrowser): boolean =>
-			!browser.dataProvider.canI('FileUpload'),
+	// upload: {
+	// 	icon: 'plus',
+	// 	isInput: true,
+	// 	isDisabled: (browser: IFileBrowser): boolean =>
+	// 		!browser.dataProvider.canI('FileUpload'),
 
-		getContent: (filebrowser: IFileBrowser): HTMLElement => {
-			const btn = new UIFileInput(filebrowser, {
-				onlyImages: filebrowser.state.onlyImages
-			});
+	// 	getContent: (
+	// 		filebrowser: IFileBrowser
+	// 	): HTMLElement => { 
+	// 		const btn = new UIFileInput(filebrowser, {
+	// 			onlyImages: filebrowser.state.onlyImages
+	// 		});
 
-			filebrowser.e.fire('bindUploader.filebrowser', btn.container);
+	// 		filebrowser.e.fire('bindUploader.filebrowser', btn.container);
 
-			return btn.container;
-		}
-	} as IControlType,
+	// 		return btn.container;
+	// 	}
+	// } as IControlType,
 
 	remove: {
 		icon: 'bin',
@@ -404,12 +398,6 @@ Config.prototype.controls.filebrowser = {
 		getContent: (fb: IFileBrowser): HTMLElement => {
 			const select: HTMLSelectElement = fb.c.fromHTML(
 				'<select class="jodit-input jodit-select">' +
-					`<option value="changed-asc">${fb.i18n(
-						'Sort by changed'
-					)} (⬆)</option>` +
-					`<option value="changed-desc">${fb.i18n(
-						'Sort by changed'
-					)} (⬇)</option>` +
 					`<option value="name-asc">${fb.i18n(
 						'Sort by name'
 					)} (⬆)</option>` +

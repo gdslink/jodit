@@ -53,7 +53,7 @@ Config.prototype.controls.file = {
 
 					close();
 				},
-				upload: true,
+				upload: false,
 				url: (url: string, text: string) => {
 					if (sourceAnchor) {
 						sourceAnchor.setAttribute('href', url);
