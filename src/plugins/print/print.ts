@@ -14,6 +14,13 @@ import * as consts from '../../core/constants';
 Config.prototype.controls.print = {
 	exec: (editor: IJodit) => {
 		const iframe = editor.create.element('iframe');
+		var my_int = 0;
+		iframe.addEventListener("load", function() {
+			if (iframe.contentWindow && (my_int>0)){
+				iframe.contentWindow.print();
+			}
+			my_int++;
+		});
 
 		Object.assign(iframe.style, {
 			position: 'fixed',
@@ -31,39 +38,32 @@ Config.prototype.controls.print = {
 			Dom.safeRemove(iframe);
 		};
 
+
 		const mywindow = iframe.contentWindow;
+
 		if (mywindow) {
+
+
+
 			editor.e
 				.on(mywindow, 'onbeforeunload onafterprint', afterFinishPrint)
 				.on(editor.ow, 'mousemove', afterFinishPrint);
 
-			if (editor.o.iframe) {
-				/**
-				 * @event generateDocumentStructure.iframe
-				 * @property {Document} doc Iframe document
-				 * @property {Jodit} editor
-				 */
-				editor.e.fire(
-					'generateDocumentStructure.iframe',
-					mywindow.document,
-					editor
-				);
-
-				mywindow.document.body.innerHTML = editor.value;
-			} else {
-				mywindow.document.write(
-					'<!doctype html><html lang="' +
-						defaultLanguage(editor.o.language) +
-						'"><head><title></title></head>' +
-						'<body>' +
-						editor.value +
-						'</body></html>'
-				);
-				mywindow.document.close();
-			}
+			mywindow.document.write(
+				'<!doctype html><html lang="' +
+					defaultLanguage(editor.o.language) +
+					'"><head><title></title></head>' +
+					'<body>' +
+					editor.value +
+					'</body></html>'
+			);
+			mywindow.document.close();
+			
 
 			mywindow.focus();
-			mywindow.print();
+			
+			
+
 		}
 	},
 	mode: consts.MODE_SOURCE + consts.MODE_WYSIWYG,
