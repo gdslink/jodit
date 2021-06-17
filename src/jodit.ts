@@ -430,7 +430,7 @@ export class Jodit extends ViewWithToolbar implements IJodit {
 
 		if (removeSelectionMarkers) {
 			value = value.replace(
-				/<span[^>]+id="jodit-selection_marker_[^>]+><\/span>/g,
+				/<\s*span[^>]+id\s*=\s*"jodit-selection_marker_[^>]+>\s*<\s*\/span>/g,
 				''
 			);
 		}

@@ -51,7 +51,7 @@ export class source extends Plugin {
 	private fromWYSIWYG = (force: boolean | string = false) => {
 		if (!this.__lock || force === true) {
 			this.__lock = true;
-			const new_value = this.j.getEditorValue(false);
+			const new_value = this.j.getEditorValue(true);
 
 			if (new_value !== this.getMirrorValue()) {
 				this.setMirrorValue(new_value);
