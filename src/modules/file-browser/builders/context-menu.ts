@@ -45,54 +45,54 @@ export default (self: FileBrowser): ((e: DragEvent) => boolean | void) => {
 			contextmenu.show(e.clientX, e.clientY, [
 				ga('data-is-file') !== '1' &&
 				opt.editImage &&
-				(self.dataProvider.canI('ImageResize') ||
-					self.dataProvider.canI('ImageCrop'))
-					? {
-							icon: 'pencil',
-							title: 'Edit',
-							exec: () => {
-								return openImageEditor.call(
-									self,
-									ga('href'),
-									ga('data-name'),
-									ga('data-path'),
-									ga('data-source')
-								);
-							}
-					  }
-					: false,
+				// (self.dataProvider.canI('ImageResize') ||
+				// 	self.dataProvider.canI('ImageCrop'))
+				// 	? {
+				// 			icon: 'pencil',
+				// 			title: 'Edit',
+				// 			exec: () => {
+				// 				return openImageEditor.call(
+				// 					self,
+				// 					ga('href'),
+				// 					ga('data-name'),
+				// 					ga('data-path'),
+				// 					ga('data-source')
+				// 				);
+				// 			}
+				// 	  }
+				// 	: false,
 
-				self.dataProvider.canI('FileRename')
-					? {
-							icon: 'italic',
-							title: 'Rename',
-							exec: async () => {
-								self.e.fire(
-									'fileRename.filebrowser',
-									ga('data-name'),
-									ga('data-path'),
-									ga('data-source')
-								);
-							}
-					  }
-					: false,
+				// self.dataProvider.canI('FileRename')
+				// 	? {
+				// 			icon: 'italic',
+				// 			title: 'Rename',
+				// 			exec: async () => {
+				// 				self.e.fire(
+				// 					'fileRename.filebrowser',
+				// 					ga('data-name'),
+				// 					ga('data-path'),
+				// 					ga('data-source')
+				// 				);
+				// 			}
+				// 	  }
+				// 	: false,
 
-				self.dataProvider.canI('FileRemove')
-					? {
-							icon: 'bin',
-							title: 'Delete',
-							exec: async () => {
-								await self.deleteFile(
-									ga('data-name'),
-									ga('data-source')
-								);
+				// self.dataProvider.canI('FileRemove')
+				// 	? {
+				// 			icon: 'bin',
+				// 			title: 'Delete',
+				// 			exec: async () => {
+				// 				await self.deleteFile(
+				// 					ga('data-name'),
+				// 					ga('data-source')
+				// 				);
 
-								self.state.activeElements = [];
+				// 				self.state.activeElements = [];
 
-								return self.loadTree();
-							}
-					  }
-					: false,
+				// 				return self.loadTree();
+				// 			}
+				// 	  }
+				// 	: false,
 
 				opt.preview
 					? {

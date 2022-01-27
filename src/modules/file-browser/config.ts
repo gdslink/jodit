@@ -104,7 +104,7 @@ Config.prototype.filebrowser = {
 		return 0;
 	},
 
-	editImage: true,
+	editImage: false,
 	preview: true,
 	showPreviewNavigation: true,
 	showSelectButtonInPreview: true,
@@ -112,22 +112,22 @@ Config.prototype.filebrowser = {
 
 	howLongShowMsg: 3000,
 
-	createNewFolder: true,
-	deleteFolder: true,
-	renameFolder: true,
-	moveFolder: true,
-	moveFile: true,
-	showFoldersPanel: true,
+	createNewFolder: false,
+	deleteFolder: false,
+	renameFolder: false,
+	moveFolder: false,
+	moveFile: false,
+	showFoldersPanel: false,
 
 	width: 859,
 	height: 400,
 
 	buttons: [
-		'filebrowser.upload',
-		'filebrowser.remove',
-		'filebrowser.update',
+		//'filebrowser.upload',
+		//'filebrowser.remove',
+		//'filebrowser.update',
 		'filebrowser.select',
-		'filebrowser.edit',
+		//'filebrowser.edit',
 		'|',
 		'filebrowser.tiles',
 		'filebrowser.list',
@@ -404,12 +404,6 @@ Config.prototype.controls.filebrowser = {
 		getContent: (fb: IFileBrowser): HTMLElement => {
 			const select: HTMLSelectElement = fb.c.fromHTML(
 				'<select class="jodit-input jodit-select">' +
-					`<option value="changed-asc">${fb.i18n(
-						'Sort by changed'
-					)} (⬆)</option>` +
-					`<option value="changed-desc">${fb.i18n(
-						'Sort by changed'
-					)} (⬇)</option>` +
 					`<option value="name-asc">${fb.i18n(
 						'Sort by name'
 					)} (⬆)</option>` +
