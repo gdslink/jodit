@@ -107,7 +107,7 @@ Config.prototype.filebrowser = {
 		return 0;
 	},
 
-	editImage: true,
+	editImage: false,
 	preview: true,
 	showPreviewNavigation: true,
 	showSelectButtonInPreview: true,
@@ -115,24 +115,24 @@ Config.prototype.filebrowser = {
 
 	howLongShowMsg: 3000,
 
-	createNewFolder: true,
-	deleteFolder: true,
-	renameFolder: true,
-	moveFolder: true,
-	moveFile: true,
+	createNewFolder: false,
+	deleteFolder: false,
+	renameFolder: false,
+	moveFolder: false,
+	moveFile: false,
 
-	showFoldersPanel: true,
-	storeLastOpenedFolder: true,
+	showFoldersPanel: false,
+	storeLastOpenedFolder: false,
 
 	width: 859,
 	height: 400,
 
 	buttons: [
-		'filebrowser.upload',
-		'filebrowser.remove',
-		'filebrowser.update',
+		// 'filebrowser.upload',
+		// 'filebrowser.remove',
+		// 'filebrowser.update',
 		'filebrowser.select',
-		'filebrowser.edit',
+		// 'filebrowser.edit',
 		'|',
 		'filebrowser.tiles',
 		'filebrowser.list',
@@ -188,11 +188,24 @@ Config.prototype.filebrowser = {
 			name = item.file;
 		}
 
-		const info = `<div class="${IC}-info">${
+		function formatBytes(bytes:any, decimals = 2) {
+			if (bytes === 0) return '0 Bytes';
+		
+			const k = 1024;
+			const dm = decimals < 0 ? 0 : decimals;
+			const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		
+			const i = Math.floor(Math.log(bytes) / Math.log(k));
+		
+			return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+		}
+
+		const info = `<div class="${IC}-info">
+		${
 			showName ? `<span class="${IC}-info-filename">${name}</span>` : ''
 		}${
 			showSize
-				? `<span class="${IC}-info-filesize">${item.size}</span>`
+				? `<span class="${IC}-info-filesize">${formatBytes(item.size)}</span>`
 				: ''
 		}${
 			showTime
@@ -416,13 +429,7 @@ Config.prototype.controls.filebrowser = {
 		getContent: (fb: IFileBrowser): HTMLElement => {
 			const select: HTMLSelectElement = fb.c.fromHTML(
 				'<select class="jodit-input jodit-select">' +
-					`<option value="changed-asc">${fb.i18n(
-						'Sort by changed'
-					)} (⬆)</option>` +
-					`<option value="changed-desc">${fb.i18n(
-						'Sort by changed'
-					)} (⬇)</option>` +
-					`<option value="name-asc">${fb.i18n(
+					`<option value="name-asc" selected >${fb.i18n(
 						'Sort by name'
 					)} (⬆)</option>` +
 					`<option value="name-desc">${fb.i18n(

@@ -8,7 +8,7 @@
  * @module modules/file-browser
  */
 
-import type { IDialog, IFileBrowser } from 'jodit/types';
+import type {  IFileBrowser } from 'jodit/types';
 import { Dialog } from 'jodit/modules/dialog';
 
 import { Dom } from 'jodit/core/dom';
@@ -16,10 +16,7 @@ import { attr, error } from 'jodit/core/helpers';
 import { makeContextMenu } from 'jodit/modules/file-browser/factories';
 import { Icon } from 'jodit/core/ui';
 import { elementToItem, getItem } from '../listeners/native-listeners';
-import { openImageEditor } from '../../image-editor/image-editor';
 import { elementsMap } from 'jodit/modules/file-browser/builders/elements-map';
-import { loadTree } from 'jodit/modules/file-browser/fetch/load-tree';
-import { deleteFile } from 'jodit/modules/file-browser/fetch/delete-file';
 
 const CLASS_PREVIEW = 'jodit-filebrowser-preview',
 	preview_tpl_next = (next = 'next', right = 'right'): string =>
@@ -59,58 +56,7 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 			contextmenu.show(e.clientX, e.clientY, [
 				ga('data-is-file') !== '1' &&
 				opt.editImage &&
-				(self.dataProvider.canI('ImageResize') ||
-					self.dataProvider.canI('ImageCrop'))
-					? {
-							icon: 'pencil',
-							title: 'Edit',
-							exec: (): Promise<IDialog> =>
-								openImageEditor.call(
-									self,
-									ga('href'),
-									ga('data-name'),
-									ga('data-path'),
-									ga('data-source')
-								)
-					  }
-					: false,
-
-				self.dataProvider.canI('FileRename')
-					? {
-							icon: 'italic',
-							title: 'Rename',
-							exec: (): void => {
-								self.e.fire(
-									'fileRename.filebrowser',
-									ga('data-name'),
-									ga('data-path'),
-									ga('data-source')
-								);
-							}
-					  }
-					: false,
-
-				self.dataProvider.canI('FileRemove')
-					? {
-							icon: 'bin',
-							title: 'Delete',
-							exec: async (): Promise<void> => {
-								try {
-									await deleteFile(
-										self,
-										ga('data-name'),
-										ga('data-source')
-									);
-								} catch (e: any) {
-									return self.status(e);
-								}
-
-								self.state.activeElements = [];
-
-								return loadTree(self).catch(self.status);
-							}
-					  }
-					: false,
+				
 
 				opt.preview
 					? {
